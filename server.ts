@@ -1,6 +1,6 @@
 //======== INSTALAÇÕES ========
 // npm install
-// npm nodemon
+// npm install nodemon
 // npm install express --save
 // npm install sequelize pg
 // npm install body-parser
@@ -14,30 +14,6 @@ app.use(bodyParser.json());
 
 const { Sequelize } = require('sequelize'); // importação do sequelize
 const sequelize = new Sequelize('postgres://postgres:meutel8414@localhost:5432/turma'); // instânciando o sequelize
-
-//-----------  definindo a model para Aluno  ------------
-const Aluno = sequelize.define('tb_alunos', {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
-      primaryKey: true
-    },
-    nome: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    idade: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: false
-    },
-    endereco: {
-      type: Sequelize.STRING,
-      allowNull: false
-    }
-  });
-// --------------------------------------------------------
 
 
 // Aluno.sync({force: true});
