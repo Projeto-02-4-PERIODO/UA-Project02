@@ -32,6 +32,39 @@ describe('GET /professores', () => {
   });
 });
 
+describe('GET /professores/curso/:curso', () => {
+  it('Deve retornar o professor pelo curso', async () => {
+    const response = await request(app).get('/professores/curso/EngSoftware');
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(2);
+    expect(response.body[0].nome).toBe('Jean');
+    expect(response.body[1].nome).toBe('Maria');
+  });
+
+  it('Deve retornar o array professor vazio se não filtrar nada pelo curso', async () => {
+    const response = await request(app).get('/professores/curso/Direito');
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(0);
+  });
+});
+
+describe('GET /professores/turma/:turma', () => {
+  it('Deve retornar o professor pela turma', async () => {
+    const response = await request(app).get('/professores/turma/1A');
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(2);
+    expect(response.body[0].nome).toBe('João da Silva');
+    expect(response.body[1].nome).toBe('Pedro Alves');
+  });
+
+  it('Deve retornar o array professor vazio se não filtrar nada pela turma', async () => {
+    const response = await request(app).get('/professores/turma/2B');
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(0);
+  });
+});
+
+
 describe('POST /professores', () => {
   it('Deve cadastrar um novo professor', async () => {
     const novoProfessor = {

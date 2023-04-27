@@ -23,6 +23,27 @@ class ProfessorController {
     res.json(results);
   }
 
+  async listByCourse(req: Request, res: Response) {
+    const { curso } = req.params;
+  
+    const professores = await Professor.find({
+      cursos: curso,
+    });
+  
+    return res.json(professores);
+  }
+  
+  async listByClass(req: Request, res: Response) {
+    const { turma } = req.params;
+  
+    const professores = await Professor.find({
+      turmas: turma,
+    });
+  
+    return res.json(professores);
+  }
+  
+
   create(req: Request, res: Response): void {
     const { nome, endereco, especialidade } = req.body;
 
