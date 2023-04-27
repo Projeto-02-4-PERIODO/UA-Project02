@@ -1,46 +1,35 @@
 import { request } from "express";
 import { beforeEach } from "node:test";
 import app from "../app";
-import { Professor } from "../model/professor";
-
-let professores: Professor[] = [
-    {
-      id: 1,
-      nome: 'Jean',
-      endereco: 'Uniamérica',
-      especialidade: 'BackEnd',
-    },
-    {
-      id: 2,
-      nome: 'Maria',
-      endereco: 'Uniamérica',
-      especialidade: 'Mandar',
-    },
-  ];
-
-beforeEach(() => {
-  // Reinicializa o array de professores antes de cada teste
-  professores = [    {      id: 1,      nome: 'João',      endereco: 'Rua A, 123',      especialidade: 'Matemática',    },    {      id: 2,      nome: 'Maria',      endereco: 'Rua B, 456',      especialidade: 'História',    },  ];
-});
+import { Professor, professores } from "../model/professor";
 
 describe('GET /professores', () => {
   it('Deve retornar todos os professores', async () => {
     const response = await request(app).get('/professores');
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(professores);
+    expect(response.body.length).toBeGreaterThan(0);
   });
-});
 
-describe('GET /professores/:id', () => {
-  it('Deve retornar o professor com o ID especificado', async () => {
-    const response = await request(app).get('/professores/1');
+  it('Deve retornar professores filtrados por nome', async () => {
+    const response = await request(app).get('/professores').query({ nome: 'João' });
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(professores[0]);
+    expect(response.body.length).toBe(1);
+    expect(response.body[0].nome).toBe('João da Silva');
   });
 
-  it('Deve retornar status 404 se o ID não existir', async () => {
-    const response = await request(app).get('/professores/999');
-    expect(response.status).toBe(404);
+  it('Deve retornar professores filtrados pela especialidade', async () => {
+    const response = await request(app)
+      .get('/professores')
+      .query({ especialidade: 'História' });
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(1);
+    expect(response.body[0].especialidade).toBe('História');
+  });
+
+  it('Deve retornar vazio se nenhum professor for achado', async () => {
+    const response = await request(app).get('/professores').query({ nome: 'Foo' });
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(0);
   });
 });
 

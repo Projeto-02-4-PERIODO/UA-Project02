@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { Professor } from './Professor';
+import { Professor, professores } from '../model/professor';
 
 class ProfessorController {
-  index(req: Request, res: Response): void {
+  find(req: Request, res: Response): void {
     const { nome, especialidade } = req.query;
     let results: Professor[] = professores;
 
@@ -23,18 +23,7 @@ class ProfessorController {
     res.json(results);
   }
 
-  show(req: Request, res: Response): void {
-    const { id } = req.params;
-    const professor = professores.find((p) => p.id === parseInt(id));
-
-    if (!professor) {
-      res.status(404).json({ error: 'Professor not found' });
-    }
-
-    res.json(professor);
-  }
-
-  store(req: Request, res: Response): void {
+  create(req: Request, res: Response): void {
     const { nome, endereco, especialidade } = req.body;
 
     const professor: Professor = {
