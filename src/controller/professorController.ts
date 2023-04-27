@@ -1,70 +1,88 @@
-import { Professor } from '../model/professor';
+import { Request, Response } from 'express';
+import { Professor } from './Professor';
 
-let professores: Professor[] = [
-  {
-    id: 1,
-    nome: 'Jean',
-    endereco: 'Uniamérica',
-    especialidade: 'BackEnd',
-  },
-  {
-    id: 2,
-    nome: 'Maria',
-    endereco: 'Uniamérica',
-    especialidade: 'Mandar',
-  },
-];
+class ProfessorController {
+  index(req: Request, res: Response): void {
+    const { nome, especialidade } = req.query;
+    let results: Professor[] = professores;
 
-function getNextId(): number {
-  const ids = professores.map((p) => p.id);
-  return ids.length > 0 ? Math.max(...ids) + 1 : 1;
-}
+    if (nome) {
+      results = results.filter((professor) =>
+        professor.nome.toLowerCase().includes(nome.toString().toLowerCase())
+      );
+    }
 
-export function listarProfessores(req, res) {
-  res.json(professores);
-}
+    if (especialidade) {
+      results = results.filter((professor) =>
+        professor.especialidade
+          .toLowerCase()
+          .includes(especialidade.toString().toLowerCase())
+      );
+    }
 
-export function buscarProfessor(req, res) {
-  const id = parseInt(req.params.id);
-  const professor = professores.find((p) => p.id === id);
-  if (professor) {
+    res.json(results);
+  }
+
+  show(req: Request, res: Response): void {
+    const { id } = req.params;
+    const professor = professores.find((p) => p.id === parseInt(id));
+
+    if (!professor) {
+      res.status(404).json({ error: 'Professor not found' });
+    }
+
     res.json(professor);
-  } else {
-    res.status(404).send();
   }
-}
 
-export function cadastrarProfessor(req, res) {
-  const { nome, endereco, especialidade } = req.body;
-  const professor: Professor = {
-    id: getNextId(),
-    nome,
-    endereco,
-    especialidade,
-  };
-  professores.push(professor);
-  res.status(201).json(professor);
-}
-
-export function editarProfessor(req, res) {
-  const id = parseInt(req.params.id);
-  const index = professores.findIndex((p) => p.id === id);
-  if (index !== -1) {
+  store(req: Request, res: Response): void {
     const { nome, endereco, especialidade } = req.body;
-    professores[index] = { ...professores[index], nome, endereco, especialidade };
-    res.json(professores[index]);
-  } else {
-    res.status(404).send();
+
+    const professor: Professor = {
+      id: professores.length + 1,
+      nome,
+      endereco,
+      especialidade,
+    };
+
+    professores.push(professor);
+
+    res.status(201).json(professor);
+  }
+
+  update(req: Request, res: Response): void {
+    const { id } = req.params;
+    const { nome, endereco, especialidade } = req.body;
+
+    const professorIndex = professores.findIndex(
+      (professor) => professor.id === parseInt(id)
+    );
+
+    if (professorIndex === -1) {
+      res.status(404).json({ error: 'Professor not found' });
+    }
+
+    professores[professorIndex].nome = nome;
+    professores[professorIndex].endereco = endereco;
+    professores[professorIndex].especialidade = especialidade;
+
+    res.json(professores[professorIndex]);
+  }
+
+  delete(req: Request, res: Response): void {
+    const { id } = req.params;
+
+    const professorIndex = professores.findIndex(
+      (professor) => professor.id === parseInt(id)
+    );
+
+    if (professorIndex === -1) {
+      res.status(404).json({ error: 'Professor not found' });
+    }
+
+    professores.splice(professorIndex, 1);
+
+    res.status(204).send();
   }
 }
 
-export function deletarProfessor(req, res) {
-  const id = parseInt(req.params.id);
-  const index = professores.findIndex((p) => p.id === id);
-  if (index !== -1) {
-    professores.splice(index, 1);
-    res.status(204).send();
-  } else {
-    res.status(404).send();
-  }
-}
+export default new ProfessorController();

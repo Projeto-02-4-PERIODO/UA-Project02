@@ -1,12 +1,22 @@
 import express from 'express';
-import { listarProfessores, buscarProfessor, cadastrarProfessor, editarProfessor, deletarProfessor } from '../src/controller/professorController';
+import ProfessorController from '../src/controller/professorController';
 
 const router = express.Router();
 
-router.get('/professores', listarProfessores);
-router.get('/professores/:id', buscarProfessor);
-router.post('/professores', cadastrarProfessor);
-router.put('/professores/:id', editarProfessor);
-router.delete('/professores/:id', deletarProfessor);
+// PROFESSOR
+router.get('/professores', ProfessorController.index);
+router.get('/professores/:id', ProfessorController.show);
+router.post('/professores', ProfessorController.store);
+router.put('/professores/:id', ProfessorController.update);
+router.delete('/professores/:id', ProfessorController.delete);
+
+// ALUNOS
+
+
+// CURSOS
+
+
+// TURMAS
+
 
 export default router;
