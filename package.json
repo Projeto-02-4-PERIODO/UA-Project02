@@ -1,0 +1,27 @@
+{
+  "name": "ua-project02",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Projeto-02-4-PERIODO/UA-Project02.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Projeto-02-4-PERIODO/UA-Project02/issues"
+  },
+  "homepage": "https://github.com/Projeto-02-4-PERIODO/UA-Project02#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.1",
+    "nodemon": "^2.0.16"
+  }
+}
