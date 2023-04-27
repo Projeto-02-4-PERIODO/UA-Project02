@@ -1,7 +1,6 @@
 import { request } from "express";
-import { beforeEach } from "node:test";
 import app from "../app";
-import { Professor, professores } from "../model/professor";
+import { professores } from "../model/professor";
 
 describe('GET /professores', () => {
   it('Deve retornar todos os professores', async () => {
