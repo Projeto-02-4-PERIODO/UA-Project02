@@ -1,8 +1,29 @@
 {
+  "name": "ua-project02",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "nodemon index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Projeto-02-4-PERIODO/UA-Project02.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Projeto-02-4-PERIODO/UA-Project02/issues"
+  },
+  "homepage": "https://github.com/Projeto-02-4-PERIODO/UA-Project02#readme",
   "dependencies": {
-    "body-parser": "^1.20.2",
     "express": "^4.18.2",
-    "pg": "^8.10.0",
-    "sequelize": "^6.31.0"
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.1",
+    "nodemon": "^2.0.16"
   }
 }

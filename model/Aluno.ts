@@ -1,23 +1,26 @@
 //-----------  definindo a model para Aluno  ------------
-const Aluno = sequelize.define('tb_alunos', {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
-      primaryKey: true
-    },
-    nome: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    idade: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: false
-    },
-    endereco: {
-      type: Sequelize.STRING,
-      allowNull: false
-    }
-  });
-// --------------------------------------------------------
+export interface Aluno{
+
+  id: number;
+  nome: string;
+  idade: number;
+  endereco: string;
+  // turmaId: Turma[];
+}
+export let alunos: Aluno[] = [
+  {
+    id:1,
+    nome: 'Maria',
+    idade: 20,
+    endereco: 'rua 1'
+
+  },
+  {
+    id:2,
+    nome: 'Eduardo',
+    idade: 18,
+    endereco: 'rua 2'
+
+  }
+];
+//-------------------------------------------------------
