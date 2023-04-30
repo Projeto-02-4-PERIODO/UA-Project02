@@ -1,5 +1,6 @@
 import express from 'express';
-import ProfessorController from '../src/controller/professorController';
+import ProfessorController from './controller/professorController';
+import  turmaController  from './controller/turmaController';
 
 const router = express.Router();
 
@@ -16,6 +17,10 @@ router.delete('/professores/:id', ProfessorController.delete);
 
 
 // TURMAS
+router.get('/turmas', turmaController.getAllTurmas);
+router.post('/turmas', turmaController.createTurma);
+router.put('/turmas/:id', turmaController.updateTurma);
+router.delete('/turmas/:id', turmaController.deleteTurma);
 
 
 export default router;
