@@ -1,8 +1,11 @@
 import express from 'express';
 import AlunoController from './controller/AlunoController';
-// import ProfessorController from './src/controller/professorController';
-
 const router = express.Router();
+
+import dotenv from 'dotenv';
+
+require('dotenv').config();
+dotenv.config();
 
 // PROFESSOR
 // router.get('/professores', ProfessorController.find);

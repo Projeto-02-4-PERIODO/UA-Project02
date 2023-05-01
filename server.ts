@@ -4,6 +4,10 @@
 // npm install express --save
 // npm install sequelize pg
 // npm install body-parser
+// npm install --save-dev jest @types/jest ts-jest
+// npm install --save-dev supertest @types/supertest
+// npm install dotenv --save
+// npm install db
 // ============================
 
 
