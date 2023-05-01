@@ -1,8 +1,9 @@
-import request from 'supertest';
-import { Pool } from 'pg';
+// import request from 'supertest';
+// import { Pool } from 'pg';
 
-// const request = await import 'supertest';
 const router = await import ("../app");
+const request = await import ("supertest");
+const { Pool } = await import ("pg")
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,

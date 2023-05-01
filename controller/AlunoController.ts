@@ -27,15 +27,6 @@ import { pool } from '../db';
 
 
 class AlunoController{
-
-   
-
-
-
-
-
-
-  
     
     async findByNome(req: express.Request, res: express.Response){
         const { nome } = req.query;
