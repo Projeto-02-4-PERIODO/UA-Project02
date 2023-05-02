@@ -2,6 +2,7 @@ import express from 'express';
 import ProfessorController from './controller/professorController';
 import AlunoController from './controller/AlunoController';
 import  turmaController  from './controller/turmaController';
+import cursoController from './controller/cursoController';
 
 const router = express.Router();
 
@@ -20,6 +21,11 @@ router.delete('/alunos/delete/:id', AlunoController.delete);
 
 // CURSOS
 
+router.get('/cursos', cursoController.findAll);
+router.get('/cursos/:nome', cursoController.findByNomeESigla);
+router.post('/cursos/create', cursoController.create);
+router.put('/cursos/update/:id', cursoController.update);
+router.delete('/cursos/delete/:id', cursoController.delete);
 
 // TURMAS
 router.get('/turmas', turmaController.getAllTurmas);
