@@ -28,8 +28,7 @@ dotenv.config();
 // CURSOS
 
 router.get('/cursos', cursoController.findAll);
-router.get('/cursos/:nome', cursoController.findByNome);
-router.get('/cursos/:sigla', cursoController.findBySigla);
+router.get('/cursos/:nome', cursoController.findByNomeESigla);
 router.post('/cursos/create', cursoController.create);
 router.put('/cursos/update/:id', cursoController.update);
 router.delete('/cursos/delete/:id', cursoController.delete);

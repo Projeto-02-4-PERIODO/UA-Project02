@@ -5,42 +5,32 @@ import { pool } from '../../db';
 
 class cursoController{
 
-    async findByNome(req: express.Request, res: express.Response){
-        const { nome } = req.query;
+  async findByNomeESigla(req: express.Request, res: express.Response): Promise<void> {
+    const { nome, sigla } = req.query;
 
-        try{
-          const { rows } = await pool.query('SELECT * FROM cursos');
-          let resultados: Curso[] = rows;
+    try {
+      const { rows } = await pool.query('SELECT * FROM cursos WHERE nome ILIKE $1 AND sigla ILIKE $2',
+      [`%${nome}%`, `%${sigla}%`]);
 
-          if(nome){
-            resultados = resultados.filter((curso) =>
-              curso.nome.toLowerCase().includes(nome.toString().toLowerCase())
-            );
-          }
-          res.json(resultados);
-        } catch (err) {
-          console.error(err);
-          res.status(500).send('Internal Server Error');
-        }        
+      let resultados: Curso[] = rows;
+
+      if (nome) {
+        resultados = resultados.filter((curso) =>
+          curso.nome.toLowerCase().includes(nome.toString().toLowerCase())
+        );
+      }
+
+      if (sigla) {
+        resultados = resultados.filter((curso) =>
+          curso.sigla.toLowerCase().includes(sigla.toString().toLowerCase())
+        );
+      }
+
+      res.json(resultados);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
     }
-
-    async findBySigla(req: express.Request, res: express.Response){
-      const { sigla } = req.query;
-
-      try{
-        const { rows } = await pool.query('SELECT * FROM cursos');
-        let resultados: Curso[] = rows;
-
-        if(sigla){
-          resultados = resultados.filter((curso) =>
-            curso.sigla.toLowerCase().includes(sigla.toString().toLowerCase())
-          );
-        }
-        res.json(resultados);
-      } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-      }        
   }
 
     async findAll(req: express.Request, res: express.Response){
