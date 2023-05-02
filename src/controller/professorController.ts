@@ -9,7 +9,8 @@ class ProfessorController {
     const { nome, especialidade } = req.query;
 
     try {
-      const { rows } = await pool.query('SELECT * FROM professores');
+      const { rows } = await pool.query('SELECT * FROM professores WHERE nome ILIKE $1 AND especialidade ILIKE $2',
+      [`%${nome}%`, `%${especialidade}%`]);
 
       let results: Professor[] = rows;
 
