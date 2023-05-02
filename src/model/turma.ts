@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../database';
+import { sequelize } from '../db';
 
 export interface TurmaAttributes {
   id?: number;
@@ -32,7 +32,7 @@ Turma.init(
   },
   {
     sequelize,
-    tableName: 'turmas',
+    tableName: 'turma',
     timestamps: false,
   }
 );
