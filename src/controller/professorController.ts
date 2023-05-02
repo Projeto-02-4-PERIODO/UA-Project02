@@ -3,6 +3,7 @@ import { Professor } from '../model/professor';
 import { pool } from '../../db';
 
 
+
 class ProfessorController {
   async find(req: Request, res: Response): Promise<void> {
     const { nome, especialidade } = req.query;
