@@ -12,6 +12,28 @@ class turmaController{
     }
   }
 
+  async getTurmaByAno (req: Request, res: Response)  {
+    try {
+      const ano = req.params.ano;
+      const turmas = await Turma.findAll({ where: { ano }});
+      res.json(turmas);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+
+  async getTurmaBySemestre (req: Request, res: Response)  {
+    try {
+      const semestre = req.params.semestre;
+      const turmas = await Turma.findAll({ where: { semestre }});
+      res.json(turmas);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+
   async createTurma(req: Request, res: Response) {
     try {
       const turma = await Turma.create(req.body);

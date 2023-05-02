@@ -26,6 +26,8 @@ router.get('/turmas', turmaController.getAllTurmas);
 router.post('/turmas', turmaController.createTurma);
 router.put('/turmas/:id', turmaController.updateTurma);
 router.delete('/turmas/:id', turmaController.deleteTurma);
+router.get('/turmas/buscarPorAno/:ano', turmaController.getTurmaByAno);
+router.get('/turmas/buscarPorSemestre/:semestre', turmaController.getTurmaBySemestre);
 
 
 export default router;
