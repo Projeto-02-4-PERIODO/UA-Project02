@@ -6,10 +6,10 @@ import { pool } from '../db';
 class cursoController{
 
   async findByNomeESigla(req: express.Request, res: express.Response): Promise<void> {
-    const { nome, sigla } = req.query;
+    const { nome, sigla } = req.body;
 
     try {
-      const { rows } = await pool.query('SELECT * FROM cursos WHERE nome ILIKE $1 AND sigla ILIKE $2',
+      const { rows } = await pool.query('SELECT * FROM cursos c WHERE c.nome ILIKE $1 OR c.sigla ILIKE $2',
       [`%${nome}%`, `%${sigla}%`]);
 
       let resultados: Curso[] = rows;

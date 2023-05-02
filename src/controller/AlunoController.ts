@@ -28,39 +28,20 @@ import { pool } from '../db';
 
 class AlunoController{
     
-    async findByNome(req: express.Request, res: express.Response){
-        const { nome } = req.query;
-        
-        try{
-            const { rows } = await pool.query('SELECT * FROM tb_alunos WHERE nome=$1',
-            [nome]);
-            let resultado: Aluno[] = rows;
-            console.log("aqui  1")
-
-            
-            // if(1+1 == 2){
-            //     resultado = resultado.filter((alunos) => {
-            //         alunos.nome.toLowerCase().includes(nome.toString().toLowerCase());
-            //     })
-            // }
-
-            
-            // if (nome){
-            //         console.log("aqui 2 ")
-            //         resultado = resultado.filter((alunos) => {
-            //             alunos.nome.toLowerCase().includes(nome.toString().toLowerCase());
-            // });
-            
-            // }
-            res.json(resultado);
-            console.log("aqui 3")
-            
-        }catch (error){
-            console.log(error);
-            res.status(500).send('Internal Server Error');
+    async findByNome(req: Request, res: Response): Promise<Response> {
+        const { nome } = req.body;
+    
+        try {
+          const { rows } = await pool.query<Aluno>(
+            'SELECT * FROM tb_alunos a WHERE a.nome ILIKE $1',
+            [`%${nome}%`]
+          );
+          return res.status(200).json(rows);
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ error: 'Internal server error' });
         }
-
-    }
+      }
 
     async findAll(req: express.Request, res: express.Response){
         const { rows } = await pool.query('SELECT * FROM tb_alunos');
@@ -104,7 +85,7 @@ class AlunoController{
 
         try{
             const { rows } = await pool.query( //  ? rows ?
-                'UPDATE tb_alunos SET nome=$1, endereco=$2, idade$3 WHERE id=$4 RETURNING *',
+                'UPDATE tb_alunos SET nome=$1, endereco=$2, idade=$3 WHERE id=$4 RETURNING *',
                 [nome, endereco, idade, id]
             );
             const aluno: Aluno = rows[0]; //?

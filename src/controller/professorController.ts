@@ -4,32 +4,27 @@ import { pool } from '../db';
 
 
 class ProfessorController {
-  async find(req: Request, res: Response): Promise<void> {
-    const { nome, especialidade } = req.query;
+
+  async findAll(req: Request, res: Response){
+    const { rows } = await pool.query('SELECT * FROM professores');
+    let resultado: Professor[] = rows;
+    
+    res.json(resultado);
+   
+}
+
+  async find(req: Request, res: Response): Promise<Response> {
+    const { nome, especialidade } = req.body;
 
     try {
-      const { rows } = await pool.query('SELECT * FROM professores');
-
-      let results: Professor[] = rows;
-
-      if (nome) {
-        results = results.filter((professor) =>
-          professor.nome.toLowerCase().includes(nome.toString().toLowerCase())
-        );
-      }
-
-      if (especialidade) {
-        results = results.filter((professor) =>
-          professor.especialidade
-            .toLowerCase()
-            .includes(especialidade.toString().toLowerCase())
-        );
-      }
-
-      res.json(results);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
+      const { rows } = await pool.query<Professor>(
+        'SELECT * FROM professores p WHERE p.nome ILIKE $1 OR p.especialidade ILIKE $2',
+        [`%${nome}%`, `%${especialidade}%`]
+      );
+      return res.status(200).json(rows);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal server error' });
     }
   }
 
