@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Professor } from '../model/professor';
-import { pool } from '../db';
+import { pool } from '../../db';
+
 
 
 class ProfessorController {

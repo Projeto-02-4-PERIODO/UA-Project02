@@ -1,6 +1,6 @@
 import { Aluno } from '../model/Aluno';
 import express, { Request, Response } from 'express';
-import { pool } from '../db';
+import { pool } from '../../db';
 
 // pool.query(`
 // CREATE TABLE sua_tabela (
