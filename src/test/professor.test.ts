@@ -3,7 +3,7 @@ import { Pool } from 'pg';
 import app from '../app';
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATA
 });
 
 beforeAll(async () => {

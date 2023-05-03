@@ -7,6 +7,12 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 import * as path from 'path';
 
+import dotenv from 'dotenv';
+
+
+require('dotenv').config();
+dotenv.config();
+
 const router = express.Router();
 
 // PROFESSOR
