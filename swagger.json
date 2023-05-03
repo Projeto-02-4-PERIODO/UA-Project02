@@ -1,0 +1,536 @@
+{
+    "swagger": "3.0.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Project2"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/alunos": {
+        "get": {
+          "tags": [
+            "Alunos"
+          ],
+          "summary": "Retorna todos os alunos",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de alunos",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Alunos"
+                }
+              }
+            },
+            "500": {
+              "description": "Erro interno do servidor"
+            }
+          }
+        },
+        "/alunos/create": {
+          "post": {
+            "tags": [
+              "Alunos"
+            ],
+            "summary": "Cria um novo aluno",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "aluno",
+                "description": "Adiciona aluno",
+                "schema": {
+                  "$ref": "#/definitions/NovoAluno"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Aluno criado com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Aluno"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          }
+        },
+        "/alunos/update/{id}": {
+          "put": {
+            "tags": [
+              "Alunos"
+            ],
+            "summary": "Atualiza um aluno",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "aluno",
+                "description": "Atualizar aluno",
+                "schema": {
+                  "$ref": "#/definitions/UpdateAluno"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Aluno atualizado com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Aluno"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          }
+        },
+        "/alunos/delete/{id}": {
+          "delete": {
+            "tags": [
+              "Alunos"
+            ],
+            "summary": "Deleta um aluno",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "aluno",
+                "description": "Deletar aluno",
+                "schema": {
+                  "$ref": "#/definitions/UpdateAluno"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Aluno deletado com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Aluno"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          }
+        },
+        "/professores": {
+          "get" : {
+            "tags": [
+              "Professores"
+            ],
+            "summary": "Retorna todos os professores",
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "Lista de professores",
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Professores"
+                  }
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          },
+          "post": {
+            "tags": [
+              "Professores"
+            ],
+            "summary": "Cria um novo professor",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "professor",
+                "description": "Adiciona professor",
+                "schema": {
+                  "$ref": "#/definitions/Professor"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Professor criado com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Professor"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          }
+        },
+        "/professores/{id}": {
+          "put": {
+            "tags": [
+              "Professores"
+            ],
+            "summary": "Atualiza um professor",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "professor",
+                "description": "Atualizar professor",
+                "schema": {
+                  "$ref": "#/definitions/UpdateProfessor"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Professor atualizado com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Professor"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          },
+          "delete": {
+            "tags": [
+              "Professores"
+            ],
+            "summary": "Deleta um professor",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "professor",
+                "description": "Deletar professor",
+                "schema": {
+                  "$ref": "#/definitions/DeleteProfessor"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Professor deletado com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Professor"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          }
+        },
+        "/cursos": {
+          "get": {
+            "tags": [
+              "Cursos"
+            ],
+            "summary": "Retorna todos os cursos",
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "Lista de cursos",
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Cursos"
+                  }
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          }
+        },
+        "/cursos/create": {
+          "post": {
+            "tags": [
+              "Curso"
+            ],
+            "summary": "Cria um novo curso",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "curso",
+                "description": "Adiciona curso",
+                "schema": {
+                  "$ref": "#/definitions/Curso"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Curso criado com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Curso"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          }
+        },
+        "/cursos/update/{id}": {
+          "put": {
+            "tags": [
+              "Cursos"
+            ],
+            "summary": "Atualiza um cursos",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "curso",
+                "description": "Atualizar curso",
+                "schema": {
+                  "$ref": "#/definitions/UpdateCurso"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Curso atualizado com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Curso"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          
+          }
+        },
+        "/cursos/delete/{id}": {
+          "delete": {
+            "tags": [
+              "Cursos"
+            ],
+            "summary": "Deleta um curso",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "curso",
+                "description": "Deletar curso",
+                "schema": {
+                  "$ref": "#/definitions/DeleteCurso"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Curso deletado com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Curso"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          }
+        },
+        "/turmas": {
+          "get": {
+            "tags": [
+              "Turmas"
+            ],
+            "summary": "Retorna todos as turmas",
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "Lista de turmas",
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Turmas"
+                  }
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          }
+        },
+          "post": {
+            "tags": [
+              "Turmas"
+            ],
+            "summary": "Cria uma nova turma",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "turma",
+                "description": "Adiciona turma",
+                "schema": {
+                  "$ref": "#/definitions/Turma"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Turma criada com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Turma"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+        },
+        "/turmas/{id}": {
+          "put": {
+            "tags": [
+              "Turmas"
+            ],
+            "summary": "Atualiza uma turma",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "turma",
+                "description": "Atualizar turma",
+                "schema": {
+                  "$ref": "#/definitions/UpdateTurma"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Turma atualizada com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Turma"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          
+          }
+        },
+        "/turmas{id}": {
+          "delete": {
+            "tags": [
+              "Turmas"
+            ],
+            "summary": "Deleta uma turma",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "turma",
+                "description": "Deletar turma",
+                "schema": {
+                  "$ref": "#/definitions/DeleteTurma"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Turma deletada com sucesso",
+                "schema": {
+                  "$ref": "#/definitions/Turma"
+                }
+              },
+              "500": {
+                "description": "Erro interno do servidor"
+              }
+            }
+          }
+        }
+      }
+        
+    }
+}
+
+
+
+               
+  

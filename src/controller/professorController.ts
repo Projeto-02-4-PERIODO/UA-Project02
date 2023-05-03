@@ -1,76 +1,94 @@
 import { Request, Response } from 'express';
-import { Professor, professores } from '../model/professor';
+import { Professor } from '../model/professor';
+import { pool } from '../db';
+
 
 class ProfessorController {
-  find(req: Request, res: Response): void {
-    const { nome, especialidade } = req.query;
-    let results: Professor[] = professores;
 
-    if (nome) {
-      results = results.filter((professor) =>
-        professor.nome.toLowerCase().includes(nome.toString().toLowerCase())
+  async findAll(req: Request, res: Response){
+    const { rows } = await pool.query('SELECT * FROM professores');
+    let resultado: Professor[] = rows;
+    
+    res.json(resultado);
+   
+}
+
+  async find(req: Request, res: Response): Promise<Response> {
+    const { nome, especialidade } = req.body;
+
+    try {
+      const { rows } = await pool.query<Professor>(
+        'SELECT * FROM professores p WHERE p.nome ILIKE $1 OR p.especialidade ILIKE $2',
+        [`%${nome}%`, `%${especialidade}%`]
       );
+      return res.status(200).json(rows);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal server error' });
     }
-
-    if (especialidade) {
-      results = results.filter((professor) =>
-        professor.especialidade
-          .toLowerCase()
-          .includes(especialidade.toString().toLowerCase())
-      );
-    }
-
-    res.json(results);
   }
 
-  create(req: Request, res: Response): void {
+  async create(req: Request, res: Response): Promise<void> {
     const { nome, endereco, especialidade } = req.body;
 
-    const professor: Professor = {
-      id: professores.length + 1,
-      nome,
-      endereco,
-      especialidade,
-    };
+    try {
+      const { rows } = await pool.query(
+        'INSERT INTO professores (nome, endereco, especialidade) VALUES ($1, $2, $3) RETURNING *',
+        [nome, endereco, especialidade]
+      );
 
-    professores.push(professor);
+      const professor: Professor = rows[0];
 
-    res.status(201).json(professor);
+      res.status(201).json(professor);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
   }
 
-  update(req: Request, res: Response): void {
+  async update(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
     const { nome, endereco, especialidade } = req.body;
 
-    const professorIndex = professores.findIndex(
-      (professor) => professor.id === parseInt(id)
-    );
+    try {
+      const { rows } = await pool.query(
+        'UPDATE professores SET nome=$1, endereco=$2, especialidade=$3 WHERE id=$4 RETURNING *',
+        [nome, endereco, especialidade, id]
+      );
 
-    if (professorIndex === -1) {
-      res.status(404).json({ error: 'Professor not found' });
+      const professor: Professor = rows[0];
+
+      if (!professor) {
+        res.status(404).json({ error: 'Professor not found' });
+        return;
+      }
+
+      res.json(professor);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
     }
-
-    professores[professorIndex].nome = nome;
-    professores[professorIndex].endereco = endereco;
-    professores[professorIndex].especialidade = especialidade;
-
-    res.json(professores[professorIndex]);
   }
 
-  delete(req: Request, res: Response): void {
+  async delete(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
 
-    const professorIndex = professores.findIndex(
-      (professor) => professor.id === parseInt(id)
-    );
+    try {
+      const { rowCount } = await pool.query(
+        'DELETE FROM professores WHERE id=$1',
+        [id]
+      );
 
-    if (professorIndex === -1) {
-      res.status(404).json({ error: 'Professor not found' });
+      if (rowCount === 0) {
+        res.status(404).json({ error: 'Professor not found' });
+        return;
+      }
+
+      res.status(204).send();
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
     }
-
-    professores.splice(professorIndex, 1);
-
-    res.status(204).send();
   }
 }
 

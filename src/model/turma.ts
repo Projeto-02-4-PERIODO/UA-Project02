@@ -1,15 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../database';
+import { sequelize } from '../db';
 
 export interface TurmaAttributes {
   id?: number;
-  semestre: string;
+  semestre: number;
   ano: number;
 }
 
 export class Turma extends Model<TurmaAttributes> implements TurmaAttributes {
   public id!: number;
-  public semestre!: string;
+  public semestre!: number;
   public ano!: number;
 
 }
@@ -22,7 +22,7 @@ Turma.init(
       primaryKey: true,
     },
     semestre: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     ano: {
@@ -32,7 +32,7 @@ Turma.init(
   },
   {
     sequelize,
-    tableName: 'turmas',
+    tableName: 'turma',
     timestamps: false,
   }
 );
