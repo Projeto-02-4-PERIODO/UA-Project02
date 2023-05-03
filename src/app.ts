@@ -3,6 +3,9 @@ import ProfessorController from './controller/professorController';
 import AlunoController from './controller/AlunoController';
 import  turmaController  from './controller/turmaController';
 import cursoController from './controller/cursoController';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUI from 'swagger-ui-express';
+import * as path from 'path';
 
 const router = express.Router();
 
@@ -34,6 +37,22 @@ router.put('/turmas/:id', turmaController.updateTurma);
 router.delete('/turmas/:id', turmaController.deleteTurma);
 router.get('/turmas/buscarPorAno/:ano', turmaController.getTurmaByAno);
 router.get('/turmas/buscarPorSemestre/:semestre', turmaController.getTurmaBySemestre);
+
+const swaggerDefinition = {
+    info: {
+      title: 'API de turmas',
+      version: '1.0.0',
+      description: 'API para gerenciamento de escola.',
+    },
+    basePath: '/',
+  };
+  const options = {
+    swaggerDefinition,
+    apis: [path.join(__dirname, './src/routes/*.ts')],
+  };
+  const swaggerSpec = swaggerJSDoc(options);
+  
+  router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 
 export default router;
